@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="prancheta.png">
+
     <title>Controle de Saída de Equipamentos</title>
     <style>
         * {
@@ -228,6 +230,70 @@
             font-size: 16px;
             font-weight: 600;
         }
+
+        .equipment-checkboxes {
+            max-height: 300px;
+            overflow-y: auto;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            padding: 15px;
+            background: #f8f9fa;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            margin-bottom: 8px;
+            background: white;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .checkbox-item:hover {
+            background: #f0f4ff;
+            border-color: #667eea;
+            transform: translateX(5px);
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            margin-right: 12px;
+            cursor: pointer;
+            accent-color: #667eea;
+        }
+
+        .checkbox-item span {
+            font-size: 13px;
+            color: #495057;
+            font-weight: 500;
+        }
+
+        .checkbox-item input[type="checkbox"]:checked + span {
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        .equipment-checkboxes::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .equipment-checkboxes::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+
+        .equipment-checkboxes::-webkit-scrollbar-thumb {
+            background: #667eea;
+            border-radius: 4px;
+        }
+
+        .equipment-checkboxes::-webkit-scrollbar-thumb:hover {
+            background: #5568d3;
+        }
     </style>
 </head>
 <body>
@@ -259,8 +325,69 @@
             <div class="section-title">📋 Informações do Equipamento</div>
             
             <div class="form-group active">
-                <label for="equipamento">Equipamento <span class="required">*</span></label>
-                <input type="text" id="equipamento" name="equipamento" required placeholder="Ex: Rastreador GPS">
+                <label for="equipamento">Equipamentos <span class="required">*</span></label>
+                <div class="equipment-checkboxes">
+                    <label class="checkbox-item">
+                        <input type="checkbox" name="equipamento" value="CAMERA WI-FI/4G 1440P AE-DI2032-840">
+                        <span>CAMERA WI-FI/4G 1440P AE-DI2032-840</span>
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" name="equipamento" value="CAMERA WI-FI/4G 1440P AE-DI2032-G40">
+                        <span>CAMERA WI-FI/4G 1440P AE-DI2032-G40</span>
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" name="equipamento" value="CABO AE-VC143T-ITS 2.1MM 2M">
+                        <span>CABO AE-VC143T-ITS 2.1MM 2M</span>
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" name="equipamento" value="CABO AE-VE143T-ITS 2.1MM 2M">
+                        <span>CABO AE-VE143T-ITS 2.1MM 2M</span>
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" name="equipamento" value="MODULO DE COMUNICACAO AE-MP1460/GLF/WI58">
+                        <span>MODULO DE COMUNICACAO AE-MP1460/GLF/WI58</span>
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" name="equipamento" value="CAMERA VEICULAR AE-VC255T(6MM)(O-STD)">
+                        <span>CAMERA VEICULAR AE-VC255T(6MM)(O-STD)</span>
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" name="equipamento" value="CAMERA 720P AE-VC224T-IT(2.1MM)">
+                        <span>CAMERA 720P AE-VC224T-IT(2.1MM)</span>
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" name="equipamento" value="GRAVADOR DIGITAL DE VIDEO AE-MD5043-SD/I/GLF/WI58">
+                        <span>GRAVADOR DIGITAL DE VIDEO AE-MD5043-SD/I/GLF/WI58</span>
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" name="equipamento" value="APARELHO DE INTERCOMUNICACAO DS-MP1351 (AE)">
+                        <span>APARELHO DE INTERCOMUNICACAO DS-MP1351 (AE)</span>
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" name="equipamento" value="GRAVADOR DVR AE-MD5043 1T/SSD">
+                        <span>GRAVADOR DVR AE-MD5043 1T/SSD</span>
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" name="equipamento" value="CAMERA VEICULAR AE-VC215I-ISF RJ45 2MM O-STD">
+                        <span>CAMERA VEICULAR AE-VC215I-ISF RJ45 2MM O-STD</span>
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" name="equipamento" value="CABO DE EXTENSAO PARA GRAVADOR AE-MC0201-4 (12M4A 12M4B)">
+                        <span>CABO DE EXTENSAO PARA GRAVADOR AE-MC0201-4 (12M4A 12M4B)</span>
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" name="equipamento" value="CABO DE EXTENSAO PARA GRAVADOR AE-MC0201-6 (12M4A 12M4B)">
+                        <span>CABO DE EXTENSAO PARA GRAVADOR AE-MC0201-6 (12M4A 12M4B)</span>
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" name="equipamento" value="CARTAO DE MEMORIA AE-MW3TFL TLC/128G">
+                        <span>CARTAO DE MEMORIA AE-MW3TFL TLC/128G</span>
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" name="equipamento" value="CAMERA VEICULAR AE-VC2521T-ITS 6MM">
+                        <span>CAMERA VEICULAR AE-VC2521T-ITS 6MM</span>
+                    </label>
+                </div>
             </div>
 
             <div class="form-group active">
@@ -272,10 +399,8 @@
                 <label for="estado">Estado <span class="required">*</span></label>
                 <select id="estado" name="estado" required>
                     <option value="">Selecione...</option>
-                    <option value="Novo">Novo</option>
-                    <option value="Usado - Bom Estado">Usado - Bom Estado</option>
-                    <option value="Usado - Regular">Usado - Regular</option>
-                    <option value="Para Manutenção">Para Manutenção</option>
+                    <option value="Pronto para uso">Pronto para uso</option>
+                    <option value="Usado">Usado</option>
                 </select>
             </div>
 
@@ -331,7 +456,7 @@
     </div>
 
     <script>
-        // Configuração - ALTERE ESTA URL PARA O SEU WEBHOOK N8N
+        // Configuração - URL do Webhook n8n
         const WEBHOOK_URL = 'https://n8n-n8n.e4mudu.easypanel.host/webhook/controle-equipamentos';
 
         // Elementos
@@ -383,11 +508,37 @@
         form.addEventListener('submit', async function(e) {
             e.preventDefault();
             
+            // Coletar equipamentos selecionados
+            const equipamentosSelecionados = Array.from(
+                document.querySelectorAll('input[name="equipamento"]:checked')
+            ).map(cb => cb.value);
+            
+            // Validar se pelo menos um equipamento foi selecionado
+            if (equipamentosSelecionados.length === 0) {
+                errorAlert.textContent = '❌ Selecione pelo menos um equipamento!';
+                errorAlert.classList.add('show');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                return;
+            }
+            
             const formData = new FormData(form);
-            const data = Object.fromEntries(formData.entries());
+            const data = {};
+            
+            // Processar todos os campos exceto equipamento
+            for (let [key, value] of formData.entries()) {
+                if (key !== 'equipamento') {
+                    data[key] = value;
+                }
+            }
+            
+            // Adicionar equipamentos selecionados
+            data.equipamentos = equipamentosSelecionados;
+            data.equipamento = equipamentosSelecionados.join(', '); // Para compatibilidade
             
             // Adicionar timestamp
             data.timestamp = new Date().toISOString();
+            
+            console.log('📦 Dados a enviar:', data);
             
             // Esconder alertas
             successAlert.classList.remove('show');
@@ -407,8 +558,11 @@
                 });
                 
                 if (response.ok) {
-                    successAlert.textContent = '✅ Saída registrada com sucesso!';
+                    const qtdEquipamentos = equipamentosSelecionados.length;
+                    successAlert.textContent = `✅ Saída registrada com sucesso! ${qtdEquipamentos} equipamento(s) cadastrado(s).`;
                     successAlert.classList.add('show');
+                    
+                    // Reset form
                     form.reset();
                     
                     // Reset para data de hoje
