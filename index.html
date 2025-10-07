@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="prancheta.png">
     <title>Controle de Saída de Equipamentos</title>
     <style>
         * {
@@ -139,10 +140,6 @@
             box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
         }
 
-        input:invalid:not(:placeholder-shown) {
-            border-color: #dc3545;
-        }
-
         .btn-submit {
             width: 100%;
             padding: 15px;
@@ -162,16 +159,6 @@
         .btn-submit:hover {
             transform: translateY(-2px);
             box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
-        }
-
-        .btn-submit:active {
-            transform: translateY(0);
-        }
-
-        .btn-submit:disabled {
-            background: #ccc;
-            cursor: not-allowed;
-            transform: none;
         }
 
         .alert {
@@ -289,8 +276,64 @@
             border-radius: 4px;
         }
 
-        .equipment-checkboxes::-webkit-scrollbar-thumb:hover {
-            background: #5568d3;
+        .serial-fields-section {
+            margin-top: 10px;
+            padding: 20px;
+            background: #f0f4ff;
+            border-radius: 12px;
+            border: 2px solid #667eea;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        .serial-fields-section h3 {
+            color: #667eea;
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+
+        .serial-input-group {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            border: 2px solid #e9ecef;
+            display: grid;
+            grid-template-columns: 1fr 120px;
+            gap: 15px;
+            align-items: end;
+        }
+
+        .serial-input-group:hover {
+            border-color: #667eea;
+        }
+
+        .input-wrapper {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .equipment-name {
+            color: #667eea;
+            font-size: 12px;
+            margin-bottom: 5px;
+        }
+
+        .qty-label {
+            color: #495057;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 5px;
+            text-align: center;
+        }
+
+        .serial-input-group input[type="text"] {
+            font-family: 'Courier New', monospace;
+            text-transform: uppercase;
+        }
+
+        .serial-input-group input[type="number"] {
+            text-align: center;
+            font-weight: 600;
         }
     </style>
 </head>
@@ -303,27 +346,21 @@
         <div class="alert alert-error" id="errorAlert"></div>
 
         <form id="equipmentForm">
-            <!-- Seletor de Tipo -->
             <div class="type-selector">
                 <div class="type-option">
                     <input type="radio" id="typeConfig" name="outputType" value="configuracao" checked>
-                    <label for="typeConfig">
-                        ⚙️<br>Configuração
-                    </label>
+                    <label for="typeConfig">⚙️<br>Configuração</label>
                 </div>
                 <div class="type-option">
                     <input type="radio" id="typeTech" name="outputType" value="tecnico">
-                    <label for="typeTech">
-                        👨‍🔧<br>Saída Técnico
-                    </label>
+                    <label for="typeTech">👨‍🔧<br>Saída Técnico</label>
                 </div>
             </div>
 
-            <!-- Campos Comuns -->
             <div class="section-title">📋 Informações do Equipamento</div>
             
             <div class="form-group active">
-                <label for="equipamento">Equipamentos <span class="required">*</span></label>
+                <label>Equipamentos <span class="required">*</span></label>
                 <div class="equipment-checkboxes">
                     <label class="checkbox-item">
                         <input type="checkbox" name="equipamento" value="CAMERA WI-FI/4G 1440P AE-DI2032-840">
@@ -392,10 +429,7 @@
                 </div>
             </div>
 
-            <div class="form-group active">
-                <label for="serial">Número de Série <span class="required">*</span></label>
-                <input type="text" id="serial" name="serial" required placeholder="Ex: SN123456789">
-            </div>
+            <div id="serialFieldsContainer" class="form-group" style="display: none;"></div>
 
             <div class="form-group active">
                 <label for="estado">Estado <span class="required">*</span></label>
@@ -406,12 +440,6 @@
                 </select>
             </div>
 
-            <div class="form-group active">
-                <label for="quantidade">Quantidade <span class="required">*</span></label>
-                <input type="number" id="quantidade" name="quantidade" required min="1" value="1">
-            </div>
-
-            <!-- Campos Específicos de Configuração -->
             <div id="configFields">
                 <div class="section-title">⚙️ Dados de Configuração</div>
                 
@@ -426,7 +454,6 @@
                 </div>
             </div>
 
-            <!-- Campos Específicos de Técnico -->
             <div id="techFields" style="display: none;">
                 <div class="section-title">👨‍🔧 Dados de Saída para Técnico</div>
                 
@@ -446,9 +473,7 @@
                 </div>
             </div>
 
-            <button type="submit" class="btn-submit" id="submitBtn">
-                📤 Registrar Saída
-            </button>
+            <button type="submit" class="btn-submit">📤 Registrar Saída</button>
         </form>
 
         <div class="loading" id="loading">
@@ -458,34 +483,29 @@
     </div>
 
     <script>
-        // Configuração - URL do Webhook n8n
         const WEBHOOK_URL = 'https://n8n-n8n.e4mudu.easypanel.host/webhook/controle-equipamentos';
-
-        // Elementos
+        
         const form = document.getElementById('equipmentForm');
         const typeRadios = document.querySelectorAll('input[name="outputType"]');
         const configFields = document.getElementById('configFields');
         const techFields = document.getElementById('techFields');
-        const submitBtn = document.getElementById('submitBtn');
         const loading = document.getElementById('loading');
         const successAlert = document.getElementById('successAlert');
         const errorAlert = document.getElementById('errorAlert');
+        const serialFieldsContainer = document.getElementById('serialFieldsContainer');
+        const equipmentCheckboxes = document.querySelectorAll('input[name="equipamento"]');
 
-        // Definir data de hoje nos campos de data
         const today = new Date().toISOString().split('T')[0];
         document.getElementById('dataConfiguracao').value = today;
         document.getElementById('dataConfiguracaoTech').value = today;
         document.getElementById('dataEntregaTecnico').value = today;
 
-        // Alternância entre tipos
         typeRadios.forEach(radio => {
             radio.addEventListener('change', function() {
                 const isConfig = this.value === 'configuracao';
-                
                 configFields.style.display = isConfig ? 'block' : 'none';
                 techFields.style.display = isConfig ? 'none' : 'block';
                 
-                // Ativar/desativar required nos campos
                 document.querySelectorAll('.config-field input').forEach(input => {
                     input.required = isConfig;
                 });
@@ -493,7 +513,6 @@
                     input.required = !isConfig;
                 });
 
-                // Animação
                 if (isConfig) {
                     document.querySelectorAll('.config-field').forEach((el, i) => {
                         setTimeout(() => el.classList.add('active'), i * 50);
@@ -506,73 +525,153 @@
             });
         });
 
-        // Submissão do formulário
+        function updateSerialFields() {
+            const selectedEquipments = Array.from(equipmentCheckboxes)
+                .filter(cb => cb.checked)
+                .map(cb => cb.value);
+
+            serialFieldsContainer.innerHTML = '';
+
+            if (selectedEquipments.length === 0) {
+                serialFieldsContainer.style.display = 'none';
+                serialFieldsContainer.classList.remove('active');
+            } else {
+                serialFieldsContainer.style.display = 'block';
+                serialFieldsContainer.classList.add('active');
+                
+                const section = document.createElement('div');
+                section.className = 'serial-fields-section';
+                section.innerHTML = '<h3>🔢 Digite o Serial de Cada Equipamento</h3>';
+                
+                selectedEquipments.forEach((equipment, index) => {
+                    const inputGroup = document.createElement('div');
+                    inputGroup.className = 'serial-input-group';
+                    
+                    const displayName = equipment.length > 50 ? equipment.substring(0, 50) + '...' : equipment;
+                    
+                    inputGroup.innerHTML = `
+                        <div class="input-wrapper">
+                            <label>
+                                <span class="equipment-name">Equipamento ${index + 1}:</span>
+                                ${displayName}
+                            </label>
+                            <input 
+                                type="text" 
+                                name="serial_${index}"
+                                data-equipment="${equipment}"
+                                placeholder="Digite o serial"
+                                required
+                                autocomplete="off"
+                            >
+                        </div>
+                        <div class="input-wrapper">
+                            <div class="qty-label">Quantidade</div>
+                            <input 
+                                type="number" 
+                                name="qty_${index}"
+                                data-equipment="${equipment}"
+                                min="1"
+                                value="1"
+                                required
+                            >
+                        </div>
+                    `;
+                    section.appendChild(inputGroup);
+                });
+                
+                serialFieldsContainer.appendChild(section);
+            }
+        }
+
+        equipmentCheckboxes.forEach(cb => {
+            cb.addEventListener('change', updateSerialFields);
+        });
+
+        updateSerialFields();
+
         form.addEventListener('submit', async function(e) {
             e.preventDefault();
             
-            // Coletar equipamentos selecionados
             const equipamentosSelecionados = Array.from(
                 document.querySelectorAll('input[name="equipamento"]:checked')
             ).map(cb => cb.value);
             
-            // Validar se pelo menos um equipamento foi selecionado
             if (equipamentosSelecionados.length === 0) {
                 errorAlert.textContent = '❌ Selecione pelo menos um equipamento!';
                 errorAlert.classList.add('show');
                 window.scrollTo({ top: 0, behavior: 'smooth' });
                 return;
             }
+
+            let equipamentosComSeriais = [];
+            const serialInputs = document.querySelectorAll('input[name^="serial_"]');
+            const qtyInputs = document.querySelectorAll('input[name^="qty_"]');
+            
+            let hasError = false;
+            serialInputs.forEach((input, index) => {
+                const equipment = input.getAttribute('data-equipment');
+                const serial = input.value.trim();
+                const qtyInput = qtyInputs[index];
+                const quantidade = parseInt(qtyInput.value) || 1;
+                
+                if (!serial) {
+                    errorAlert.textContent = `❌ Preencha o serial: ${equipment.substring(0, 40)}...`;
+                    errorAlert.classList.add('show');
+                    hasError = true;
+                    return;
+                }
+
+                if (quantidade < 1) {
+                    errorAlert.textContent = `❌ Quantidade deve ser maior que 0`;
+                    errorAlert.classList.add('show');
+                    hasError = true;
+                    return;
+                }
+                
+                equipamentosComSeriais.push({
+                    equipamento: equipment,
+                    serial: serial.toUpperCase(),
+                    quantidade: quantidade
+                });
+            });
+
+            if (hasError) return;
             
             const formData = new FormData(form);
             const data = {};
             
-            // Processar todos os campos exceto equipamento
             for (let [key, value] of formData.entries()) {
-                if (key !== 'equipamento') {
+                if (!key.startsWith('serial_') && !key.startsWith('qty_') && key !== 'equipamento') {
                     data[key] = value;
                 }
             }
             
-            // Adicionar equipamentos selecionados
-            data.equipamentos = equipamentosSelecionados;
-            data.equipamento = equipamentosSelecionados.join(', '); // Para compatibilidade
-            
-            // Adicionar timestamp
+            data.equipamentosComSeriais = equipamentosComSeriais;
             data.timestamp = new Date().toISOString();
             
-            console.log('📦 Dados a enviar:', data);
-            
-            // Esconder alertas
             successAlert.classList.remove('show');
             errorAlert.classList.remove('show');
-            
-            // Mostrar loading
             form.style.display = 'none';
             loading.style.display = 'block';
             
             try {
                 const response = await fetch(WEBHOOK_URL, {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(data)
                 });
                 
-                if (response.ok) {
-                    const qtdEquipamentos = equipamentosSelecionados.length;
-                    successAlert.textContent = `✅ Saída registrada com sucesso! ${qtdEquipamentos} equipamento(s) cadastrado(s).`;
+                if (response.status >= 200 && response.status < 300) {
+                    const qtdEquipamentos = equipamentosComSeriais.length;
+                    const totalItems = equipamentosComSeriais.reduce((sum, e) => sum + e.quantidade, 0);
+                    successAlert.textContent = `✅ Saída registrada! ${qtdEquipamentos} tipo(s) - Total: ${totalItems} unidade(s).`;
                     successAlert.classList.add('show');
                     
-                    // Reset form
                     form.reset();
-                    
-                    // Reset para data de hoje
+                    updateSerialFields();
                     document.getElementById('dataConfiguracao').value = today;
                     document.getElementById('dataConfiguracaoTech').value = today;
                     document.getElementById('dataEntregaTecnico').value = today;
-                    
-                    // Reset para tipo configuração
                     document.getElementById('typeConfig').checked = true;
                     configFields.style.display = 'block';
                     techFields.style.display = 'none';
@@ -580,14 +679,11 @@
                     throw new Error('Erro ao registrar');
                 }
             } catch (error) {
-                errorAlert.textContent = '❌ Erro ao registrar saída. Tente novamente.';
+                errorAlert.textContent = '❌ Erro ao registrar: ' + error.message;
                 errorAlert.classList.add('show');
-                console.error('Erro:', error);
             } finally {
                 loading.style.display = 'none';
                 form.style.display = 'block';
-                
-                // Scroll to top para ver o alerta
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             }
         });
