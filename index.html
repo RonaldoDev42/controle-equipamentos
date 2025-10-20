@@ -621,7 +621,7 @@
                 const serial = input.value.trim();
                 const qtyInput = qtyInputs[index];
                 const quantidade = parseInt(qtyInput.value) || 1;
-                
+
                 if (!serial) {
                     errorAlert.textContent = `❌ Preencha o serial: ${equipment.substring(0, 40)}...`;
                     errorAlert.classList.add('show');
@@ -635,11 +635,25 @@
                     hasError = true;
                     return;
                 }
-                
-                equipamentosComSeriais.push({
-                    equipamento: equipment,
-                    serial: serial.toUpperCase(),
-                    quantidade: quantidade
+
+                // Separa os seriais por vírgula e cria um equipamento para cada serial
+                const seriais = serial.split(',').map(s => s.trim().toUpperCase()).filter(s => s.length > 0);
+
+                // Valida se a quantidade de seriais corresponde à quantidade informada
+                if (seriais.length !== quantidade) {
+                    errorAlert.textContent = `❌ ${equipment.substring(0, 40)}... - Quantidade (${quantidade}) diferente do número de seriais (${seriais.length})`;
+                    errorAlert.classList.add('show');
+                    hasError = true;
+                    return;
+                }
+
+                // Adiciona cada equipamento individualmente com seu serial
+                seriais.forEach(serialIndividual => {
+                    equipamentosComSeriais.push({
+                        equipamento: equipment,
+                        serial: serialIndividual,
+                        quantidade: 1  // Sempre 1 porque cada serial é um equipamento individual
+                    });
                 });
             });
 
