@@ -276,6 +276,130 @@
             border-radius: 4px;
         }
 
+        .search-bar {
+            width: 100%;
+            padding: 10px 15px 10px 38px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 14px;
+            margin-bottom: 10px;
+            transition: all 0.3s ease;
+            background: white url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23999' viewBox='0 0 16 16'%3E%3Cpath d='M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.099zm-5.242 1.656a5.5 5.5 0 1 1 0-11 5.5 5.5 0 0 1 0 11z'/%3E%3C/svg%3E") no-repeat 12px center;
+        }
+
+        .search-bar:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .no-results {
+            text-align: center;
+            color: #999;
+            font-size: 13px;
+            padding: 15px 0;
+            display: none;
+        }
+
+        .add-item-section {
+            margin-top: 12px;
+            border: 2px dashed #c0c8f0;
+            border-radius: 8px;
+            padding: 12px;
+            background: #f8f9ff;
+        }
+
+        .add-item-toggle {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            color: #667eea;
+            font-size: 13px;
+            font-weight: 600;
+            background: none;
+            border: none;
+            padding: 0;
+            width: 100%;
+        }
+
+        .add-item-toggle:hover {
+            color: #764ba2;
+        }
+
+        .add-item-form {
+            margin-top: 10px;
+            display: none;
+        }
+
+        .add-item-form.open {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .add-item-input {
+            flex: 1;
+            padding: 9px 12px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 13px;
+            transition: border-color 0.3s;
+        }
+
+        .add-item-input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .btn-add-item {
+            padding: 9px 16px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: opacity 0.2s;
+        }
+
+        .btn-add-item:hover {
+            opacity: 0.9;
+        }
+
+        .custom-badge {
+            font-size: 10px;
+            background: #764ba2;
+            color: white;
+            padding: 1px 6px;
+            border-radius: 10px;
+            margin-left: 6px;
+            vertical-align: middle;
+        }
+
+        .btn-remove-item {
+            background: none;
+            border: none;
+            color: #dc3545;
+            cursor: pointer;
+            font-size: 16px;
+            padding: 0 4px;
+            margin-left: auto;
+            opacity: 0.6;
+            transition: opacity 0.2s;
+            display: none;
+        }
+
+        .checkbox-item:hover .btn-remove-item {
+            display: block;
+        }
+
+        .btn-remove-item:hover {
+            opacity: 1;
+        }
+
         .serial-fields-section {
             margin-top: 10px;
             padding: 20px;
@@ -361,79 +485,20 @@
             
             <div class="form-group active">
                 <label>Equipamentos <span class="required">*</span></label>
-                <div class="equipment-checkboxes">
-                    <label class="checkbox-item">
-                        <input type="checkbox" name="equipamento" value="CAMERA WI-FI/4G 1440P AE-DI2032-840">
-                        <span>CAMERA WI-FI/4G 1440P AE-DI2032-840</span>
-                    </label>
-                    <label class="checkbox-item">
-                        <input type="checkbox" name="equipamento" value="CAMERA WI-FI/4G 1440P AE-DI2032-G40">
-                        <span>CAMERA WI-FI/4G 1440P AE-DI2032-G40</span>
-                    </label>
-                    <label class="checkbox-item">
-                        <input type="checkbox" name="equipamento" value="CABO AE-VC143T-ITS 2.1MM 2M">
-                        <span>CABO AE-VC143T-ITS 2.1MM 2M</span>
-                    </label>
-                    <label class="checkbox-item">
-                        <input type="checkbox" name="equipamento" value="CABO AE-VE143T-ITS 2.1MM 2M">
-                        <span>CABO AE-VE143T-ITS 2.1MM 2M</span>
-                    </label>
-                    <label class="checkbox-item">
-                        <input type="checkbox" name="equipamento" value="MODULO DE COMUNICACAO AE-MP1460/GLF/WI58">
-                        <span>MODULO DE COMUNICACAO AE-MP1460/GLF/WI58</span>
-                    </label>
-                    <label class="checkbox-item">
-                        <input type="checkbox" name="equipamento" value="CAMERA VEICULAR AE-VC255T(6MM)(O-STD)">
-                        <span>CAMERA VEICULAR AE-VC255T(6MM)(O-STD)</span>
-                    </label>
-                    <label class="checkbox-item">
-                        <input type="checkbox" name="equipamento" value="CAMERA 720P AE-VC224T-IT(2.1MM)">
-                        <span>CAMERA 720P AE-VC224T-IT(2.1MM)</span>
-                    </label>
-                    <label class="checkbox-item">
-                        <input type="checkbox" name="equipamento" value="GRAVADOR DIGITAL DE VIDEO AE-MD5043-SD/I/GLF/WI58">
-                        <span>GRAVADOR DIGITAL DE VIDEO AE-MD5043-SD/I/GLF/WI58</span>
-                    </label>
-                    <label class="checkbox-item">
-                        <input type="checkbox" name="equipamento" value="APARELHO DE INTERCOMUNICACAO DS-MP1351 (AE)">
-                        <span>APARELHO DE INTERCOMUNICACAO DS-MP1351 (AE)</span>
-                    </label>
-                    <label class="checkbox-item">
-                        <input type="checkbox" name="equipamento" value="GRAVADOR DVR AE-MD5043 1T/SSD">
-                        <span>GRAVADOR DVR AE-MD5043 1T/SSD</span>
-                    </label>
-                    <label class="checkbox-item">
-                        <input type="checkbox" name="equipamento" value="CAMERA VEICULAR AE-VC215I-ISF RJ45 2MM O-STD">
-                        <span>CAMERA VEICULAR AE-VC215I-ISF RJ45 2MM O-STD</span>
-                    </label>
-                    <label class="checkbox-item">
-                        <input type="checkbox" name="equipamento" value="CABO DE EXTENSAO PARA GRAVADOR AE-MC0201-4 (12M4A 12M4B)">
-                        <span>CABO DE EXTENSAO PARA GRAVADOR AE-MC0201-4 (12M4A 12M4B)</span>
-                    </label>
-                    <label class="checkbox-item">
-                        <input type="checkbox" name="equipamento" value="CABO DE EXTENSAO PARA GRAVADOR AE-MC0201-6 (12M4A 12M4B)">
-                        <span>CABO DE EXTENSAO PARA GRAVADOR AE-MC0201-6 (12M4A 12M4B)</span>
-                    </label>
-                    <label class="checkbox-item">
-                        <input type="checkbox" name="equipamento" value="CARTAO DE MEMORIA AE-MW3TFL TLC/128G">
-                        <span>CARTAO DE MEMORIA AE-MW3TFL TLC/128G</span>
-                    </label>
-                    <label class="checkbox-item">
-                        <input type="checkbox" name="equipamento" value="CAMERA VEICULAR AE-VC2521T-ITS 6MM">
-                        <span>CAMERA VEICULAR AE-VC2521T-ITS 6MM</span>
-                    </label>
-                    <label class="checkbox-item">
-                        <input type="checkbox" name="equipamento" value="COLOR CAMERA">
-                        <span>COLOR CAMERA</span>
-                    </label>
-                    <label class="checkbox-item">
-                        <input type="checkbox" name="equipamento" value="CARTAO DE MEMORIA">
-                        <span>CARTAO DE MEMORIA</span>
-                    </label>
-                    <label class="checkbox-item">
-                        <input type="checkbox" name="equipamento" value="CHIP ARQUIA">
-                        <span>CHIP ARQUIA</span>
-                    </label>
+                <input type="text" id="equipmentSearch" class="search-bar" placeholder="Pesquisar equipamento...">
+                <div class="equipment-checkboxes" id="equipmentList">
+                    <!-- Renderizado pelo JavaScript -->
+                </div>
+                <div class="no-results" id="noResults">Nenhum equipamento encontrado.</div>
+
+                <div class="add-item-section">
+                    <button type="button" class="add-item-toggle" id="addItemToggle">
+                        ➕ Adicionar novo equipamento
+                    </button>
+                    <div class="add-item-form" id="addItemForm">
+                        <input type="text" class="add-item-input" id="newItemName" placeholder="Nome do equipamento (ex: SENSOR GPS XYZ-100)">
+                        <button type="button" class="btn-add-item" id="btnAddItem">Adicionar</button>
+                    </div>
                 </div>
             </div>
 
@@ -492,7 +557,95 @@
 
     <script>
         const WEBHOOK_URL = 'https://n8n-n8n.e4mudu.easypanel.host/webhook/controle-equipamentos';
-        
+
+        // Lista padrão de equipamentos
+        const DEFAULT_EQUIPMENTS = [
+            "CAMERA WI-FI/4G 1440P AE-DI2032-840",
+            "CAMERA WI-FI/4G 1440P AE-DI2032-G40",
+            "CABO AE-VC143T-ITS 2.1MM 2M",
+            "CABO AE-VE143T-ITS 2.1MM 2M",
+            "MODULO DE COMUNICACAO AE-MP1460/GLF/WI58",
+            "CAMERA VEICULAR AE-VC255T(6MM)(O-STD)",
+            "CAMERA 720P AE-VC224T-IT(2.1MM)",
+            "GRAVADOR DIGITAL DE VIDEO AE-MD5043-SD/I/GLF/WI58",
+            "APARELHO DE INTERCOMUNICACAO DS-MP1351 (AE)",
+            "GRAVADOR DVR AE-MD5043 1T/SSD",
+            "CAMERA VEICULAR AE-VC215I-ISF RJ45 2MM O-STD",
+            "CABO DE EXTENSAO PARA GRAVADOR AE-MC0201-4 (12M4A 12M4B)",
+            "CABO DE EXTENSAO PARA GRAVADOR AE-MC0201-6 (12M4A 12M4B)",
+            "CARTAO DE MEMORIA AE-MW3TFL TLC/128G",
+            "CAMERA VEICULAR AE-VC2521T-ITS 6MM",
+            "COLOR CAMERA",
+            "CARTAO DE MEMORIA",
+            "CHIP ARQUIA"
+        ];
+
+        function getCustomEquipments() {
+            return JSON.parse(localStorage.getItem('customEquipments') || '[]');
+        }
+
+        function saveCustomEquipments(list) {
+            localStorage.setItem('customEquipments', JSON.stringify(list));
+        }
+
+        function getAllEquipments() {
+            return [...DEFAULT_EQUIPMENTS, ...getCustomEquipments()];
+        }
+
+        function renderEquipments(filter = '') {
+            const list = document.getElementById('equipmentList');
+            const noResults = document.getElementById('noResults');
+            const customItems = getCustomEquipments();
+            const all = getAllEquipments();
+            const term = filter.toLowerCase();
+
+            const filtered = all.filter(eq => eq.toLowerCase().includes(term));
+
+            list.innerHTML = '';
+
+            if (filtered.length === 0) {
+                noResults.style.display = 'block';
+            } else {
+                noResults.style.display = 'none';
+            }
+
+            filtered.forEach(eq => {
+                const isCustom = customItems.includes(eq);
+                const label = document.createElement('label');
+                label.className = 'checkbox-item';
+                label.innerHTML = `
+                    <input type="checkbox" name="equipamento" value="${eq}">
+                    <span>${eq}${isCustom ? '<span class="custom-badge">personalizado</span>' : ''}</span>
+                    ${isCustom ? `<button type="button" class="btn-remove-item" title="Remover item" data-name="${eq}">✕</button>` : ''}
+                `;
+                // Mantém o estado checked se estava marcado antes do filtro
+                const wasChecked = Array.from(
+                    document.querySelectorAll('input[name="equipamento"]:checked')
+                ).some(cb => cb.value === eq);
+                if (wasChecked) {
+                    label.querySelector('input[type="checkbox"]').checked = true;
+                }
+                label.querySelector('input[type="checkbox"]').addEventListener('change', updateSerialFields);
+                const removeBtn = label.querySelector('.btn-remove-item');
+                if (removeBtn) {
+                    removeBtn.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        removeCustomEquipment(eq);
+                    });
+                }
+                list.appendChild(label);
+            });
+
+            updateSerialFields();
+        }
+
+        function removeCustomEquipment(name) {
+            if (!confirm(`Remover "${name}" da lista?`)) return;
+            const customs = getCustomEquipments().filter(eq => eq !== name);
+            saveCustomEquipments(customs);
+            renderEquipments(document.getElementById('equipmentSearch').value);
+        }
+
         const form = document.getElementById('equipmentForm');
         const typeRadios = document.querySelectorAll('input[name="outputType"]');
         const configFields = document.getElementById('configFields');
@@ -501,19 +654,59 @@
         const successAlert = document.getElementById('successAlert');
         const errorAlert = document.getElementById('errorAlert');
         const serialFieldsContainer = document.getElementById('serialFieldsContainer');
-        const equipmentCheckboxes = document.querySelectorAll('input[name="equipamento"]');
 
         const today = new Date().toISOString().split('T')[0];
         document.getElementById('dataConfiguracao').value = today;
         document.getElementById('dataConfiguracaoTech').value = today;
         document.getElementById('dataEntregaTecnico').value = today;
 
+        // Pesquisa
+        document.getElementById('equipmentSearch').addEventListener('input', function() {
+            renderEquipments(this.value);
+        });
+
+        // Toggle form de novo item
+        document.getElementById('addItemToggle').addEventListener('click', function() {
+            const addForm = document.getElementById('addItemForm');
+            addForm.classList.toggle('open');
+            if (addForm.classList.contains('open')) {
+                document.getElementById('newItemName').focus();
+            }
+        });
+
+        // Adicionar novo item
+        document.getElementById('btnAddItem').addEventListener('click', function() {
+            const input = document.getElementById('newItemName');
+            const name = input.value.trim().toUpperCase();
+            if (!name) {
+                alert('Digite o nome do equipamento.');
+                return;
+            }
+            if (getAllEquipments().includes(name)) {
+                alert('Este equipamento já existe na lista.');
+                return;
+            }
+            const customs = getCustomEquipments();
+            customs.push(name);
+            saveCustomEquipments(customs);
+            input.value = '';
+            document.getElementById('addItemForm').classList.remove('open');
+            renderEquipments(document.getElementById('equipmentSearch').value);
+        });
+
+        document.getElementById('newItemName').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                document.getElementById('btnAddItem').click();
+            }
+        });
+
         typeRadios.forEach(radio => {
             radio.addEventListener('change', function() {
                 const isConfig = this.value === 'configuracao';
                 configFields.style.display = isConfig ? 'block' : 'none';
                 techFields.style.display = isConfig ? 'none' : 'block';
-                
+
                 document.querySelectorAll('.config-field input').forEach(input => {
                     input.required = isConfig;
                 });
@@ -534,9 +727,9 @@
         });
 
         function updateSerialFields() {
-            const selectedEquipments = Array.from(equipmentCheckboxes)
-                .filter(cb => cb.checked)
-                .map(cb => cb.value);
+            const selectedEquipments = Array.from(
+                document.querySelectorAll('input[name="equipamento"]:checked')
+            ).map(cb => cb.value);
 
             serialFieldsContainer.innerHTML = '';
 
@@ -546,25 +739,25 @@
             } else {
                 serialFieldsContainer.style.display = 'block';
                 serialFieldsContainer.classList.add('active');
-                
+
                 const section = document.createElement('div');
                 section.className = 'serial-fields-section';
                 section.innerHTML = '<h3>🔢 Digite o Serial de Cada Equipamento</h3>';
-                
+
                 selectedEquipments.forEach((equipment, index) => {
                     const inputGroup = document.createElement('div');
                     inputGroup.className = 'serial-input-group';
-                    
+
                     const displayName = equipment.length > 50 ? equipment.substring(0, 50) + '...' : equipment;
-                    
+
                     inputGroup.innerHTML = `
                         <div class="input-wrapper">
                             <label>
                                 <span class="equipment-name">Equipamento ${index + 1}:</span>
                                 ${displayName}
                             </label>
-                            <input 
-                                type="text" 
+                            <input
+                                type="text"
                                 name="serial_${index}"
                                 data-equipment="${equipment}"
                                 placeholder="Digite o serial"
@@ -574,8 +767,8 @@
                         </div>
                         <div class="input-wrapper">
                             <div class="qty-label">Quantidade</div>
-                            <input 
-                                type="number" 
+                            <input
+                                type="number"
                                 name="qty_${index}"
                                 data-equipment="${equipment}"
                                 min="1"
@@ -586,24 +779,21 @@
                     `;
                     section.appendChild(inputGroup);
                 });
-                
+
                 serialFieldsContainer.appendChild(section);
             }
         }
 
-        equipmentCheckboxes.forEach(cb => {
-            cb.addEventListener('change', updateSerialFields);
-        });
-
-        updateSerialFields();
+        // Render inicial
+        renderEquipments();
 
         form.addEventListener('submit', async function(e) {
             e.preventDefault();
-            
+
             const equipamentosSelecionados = Array.from(
                 document.querySelectorAll('input[name="equipamento"]:checked')
             ).map(cb => cb.value);
-            
+
             if (equipamentosSelecionados.length === 0) {
                 errorAlert.textContent = '❌ Selecione pelo menos um equipamento!';
                 errorAlert.classList.add('show');
@@ -614,9 +804,10 @@
             let equipamentosComSeriais = [];
             const serialInputs = document.querySelectorAll('input[name^="serial_"]');
             const qtyInputs = document.querySelectorAll('input[name^="qty_"]');
-            
+
             let hasError = false;
             serialInputs.forEach((input, index) => {
+                if (hasError) return;
                 const equipment = input.getAttribute('data-equipment');
                 const serial = input.value.trim();
                 const qtyInput = qtyInputs[index];
@@ -636,10 +827,8 @@
                     return;
                 }
 
-                // Separa os seriais por vírgula e cria um equipamento para cada serial
                 const seriais = serial.split(',').map(s => s.trim().toUpperCase()).filter(s => s.length > 0);
 
-                // Valida se a quantidade de seriais corresponde à quantidade informada
                 if (seriais.length !== quantidade) {
                     errorAlert.textContent = `❌ ${equipment.substring(0, 40)}... - Quantidade (${quantidade}) diferente do número de seriais (${seriais.length})`;
                     errorAlert.classList.add('show');
@@ -647,50 +836,49 @@
                     return;
                 }
 
-                // Adiciona cada equipamento individualmente com seu serial
                 seriais.forEach(serialIndividual => {
                     equipamentosComSeriais.push({
                         equipamento: equipment,
                         serial: serialIndividual,
-                        quantidade: 1  // Sempre 1 porque cada serial é um equipamento individual
+                        quantidade: 1
                     });
                 });
             });
 
             if (hasError) return;
-            
+
             const formData = new FormData(form);
             const data = {};
-            
+
             for (let [key, value] of formData.entries()) {
                 if (!key.startsWith('serial_') && !key.startsWith('qty_') && key !== 'equipamento') {
                     data[key] = value;
                 }
             }
-            
+
             data.equipamentosComSeriais = equipamentosComSeriais;
             data.timestamp = new Date().toISOString();
-            
+
             successAlert.classList.remove('show');
             errorAlert.classList.remove('show');
             form.style.display = 'none';
             loading.style.display = 'block';
-            
+
             try {
                 const response = await fetch(WEBHOOK_URL, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(data)
                 });
-                
+
                 if (response.status >= 200 && response.status < 300) {
                     const qtdEquipamentos = equipamentosComSeriais.length;
                     const totalItems = equipamentosComSeriais.reduce((sum, e) => sum + e.quantidade, 0);
                     successAlert.textContent = `✅ Saída registrada! ${qtdEquipamentos} tipo(s) - Total: ${totalItems} unidade(s).`;
                     successAlert.classList.add('show');
-                    
+
                     form.reset();
-                    updateSerialFields();
+                    renderEquipments();
                     document.getElementById('dataConfiguracao').value = today;
                     document.getElementById('dataConfiguracaoTech').value = today;
                     document.getElementById('dataEntregaTecnico').value = today;
