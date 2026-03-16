@@ -262,6 +262,34 @@
             font-weight: 600;
         }
 
+        .checkbox-item.selected {
+            background: #f0f4ff;
+            border-color: #667eea;
+        }
+
+        .btn-deselect-serial {
+            background: #dc3545;
+            border: none;
+            border-radius: 50%;
+            color: white;
+            font-size: 11px;
+            font-weight: 700;
+            width: 22px;
+            height: 22px;
+            min-width: 22px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+            transition: background 0.2s;
+            align-self: center;
+        }
+
+        .btn-deselect-serial:hover {
+            background: #b02a37;
+        }
+
         .equipment-checkboxes::-webkit-scrollbar {
             width: 8px;
         }
@@ -422,7 +450,7 @@
             margin-bottom: 12px;
             border: 2px solid #e9ecef;
             display: grid;
-            grid-template-columns: 1fr 120px;
+            grid-template-columns: 1fr 120px 30px;
             gap: 15px;
             align-items: end;
         }
@@ -601,6 +629,12 @@
 
             const filtered = all.filter(eq => eq.toLowerCase().includes(term));
 
+            // Captura os valores marcados ANTES de limpar a lista
+            const checkedValues = new Set(
+                Array.from(document.querySelectorAll('input[name="equipamento"]:checked'))
+                    .map(cb => cb.value)
+            );
+
             list.innerHTML = '';
 
             if (filtered.length === 0) {
@@ -618,14 +652,16 @@
                     <span>${eq}${isCustom ? '<span class="custom-badge">personalizado</span>' : ''}</span>
                     ${isCustom ? `<button type="button" class="btn-remove-item" title="Remover item" data-name="${eq}">✕</button>` : ''}
                 `;
+                const checkbox = label.querySelector('input[type="checkbox"]');
                 // Mantém o estado checked se estava marcado antes do filtro
-                const wasChecked = Array.from(
-                    document.querySelectorAll('input[name="equipamento"]:checked')
-                ).some(cb => cb.value === eq);
-                if (wasChecked) {
-                    label.querySelector('input[type="checkbox"]').checked = true;
+                if (checkedValues.has(eq)) {
+                    checkbox.checked = true;
+                    label.classList.add('selected');
                 }
-                label.querySelector('input[type="checkbox"]').addEventListener('change', updateSerialFields);
+                checkbox.addEventListener('change', function() {
+                    label.classList.toggle('selected', this.checked);
+                    updateSerialFields();
+                });
                 const removeBtn = label.querySelector('.btn-remove-item');
                 if (removeBtn) {
                     removeBtn.addEventListener('click', (e) => {
@@ -776,7 +812,17 @@
                                 required
                             >
                         </div>
+                        <button type="button" class="btn-deselect-serial" title="Remover seleção">✕</button>
                     `;
+                    inputGroup.querySelector('.btn-deselect-serial').addEventListener('click', function() {
+                        // Desmarca o checkbox correspondente
+                        const cb = document.querySelector(`input[name="equipamento"][value="${CSS.escape(equipment)}"]`);
+                        if (cb) {
+                            cb.checked = false;
+                            cb.closest('.checkbox-item').classList.remove('selected');
+                        }
+                        updateSerialFields();
+                    });
                     section.appendChild(inputGroup);
                 });
 
