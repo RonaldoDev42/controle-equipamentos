@@ -620,6 +620,9 @@
             return [...DEFAULT_EQUIPMENTS, ...getCustomEquipments()];
         }
 
+        // Fonte de verdade para itens selecionados (independente do DOM)
+        const selectedItems = new Set();
+
         function renderEquipments(filter = '') {
             const list = document.getElementById('equipmentList');
             const noResults = document.getElementById('noResults');
@@ -628,12 +631,6 @@
             const term = filter.toLowerCase();
 
             const filtered = all.filter(eq => eq.toLowerCase().includes(term));
-
-            // Captura os valores marcados ANTES de limpar a lista
-            const checkedValues = new Set(
-                Array.from(document.querySelectorAll('input[name="equipamento"]:checked'))
-                    .map(cb => cb.value)
-            );
 
             list.innerHTML = '';
 
@@ -653,12 +650,17 @@
                     ${isCustom ? `<button type="button" class="btn-remove-item" title="Remover item" data-name="${eq}">✕</button>` : ''}
                 `;
                 const checkbox = label.querySelector('input[type="checkbox"]');
-                // Mantém o estado checked se estava marcado antes do filtro
-                if (checkedValues.has(eq)) {
+                // Restaura estado a partir do Set (fonte de verdade)
+                if (selectedItems.has(eq)) {
                     checkbox.checked = true;
                     label.classList.add('selected');
                 }
                 checkbox.addEventListener('change', function() {
+                    if (this.checked) {
+                        selectedItems.add(eq);
+                    } else {
+                        selectedItems.delete(eq);
+                    }
                     label.classList.toggle('selected', this.checked);
                     updateSerialFields();
                 });
@@ -763,9 +765,7 @@
         });
 
         function updateSerialFields() {
-            const selectedEquipments = Array.from(
-                document.querySelectorAll('input[name="equipamento"]:checked')
-            ).map(cb => cb.value);
+            const selectedEquipments = Array.from(selectedItems);
 
             serialFieldsContainer.innerHTML = '';
 
@@ -815,7 +815,7 @@
                         <button type="button" class="btn-deselect-serial" title="Remover seleção">✕</button>
                     `;
                     inputGroup.querySelector('.btn-deselect-serial').addEventListener('click', function() {
-                        // Desmarca o checkbox correspondente
+                        selectedItems.delete(equipment);
                         const cb = document.querySelector(`input[name="equipamento"][value="${CSS.escape(equipment)}"]`);
                         if (cb) {
                             cb.checked = false;
@@ -924,6 +924,7 @@
                     successAlert.classList.add('show');
 
                     form.reset();
+                    selectedItems.clear();
                     renderEquipments();
                     document.getElementById('dataConfiguracao').value = today;
                     document.getElementById('dataConfiguracaoTech').value = today;
